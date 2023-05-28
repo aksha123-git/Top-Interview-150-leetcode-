@@ -1,0 +1,40 @@
+//o(n^2) tc
+/*class Solution {
+public:
+    int subarraySum(vector<int>& arr, int k) {
+        int n =  arr.size();
+        int ans = 0;
+        for(int i = 0; i < n ; i++){
+            int sum = arr[i];
+            if(sum == k)
+            ans++;
+
+             for(int j = i+1 ; j < n ; j++){
+                 sum += arr[j];
+                 if(sum == k)
+                 ans++;
+             }
+        }
+        return ans;
+    }
+};*/
+//TLE from brute force approach
+
+
+class Solution {
+public:
+     int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int,int> mp;
+        int sum=0,ans=0;
+        mp[sum] = 1; // Set mp[sum] to 1, which means there is one subarray found with a sum of 0    (initial prefix sum).
+        for(auto it:nums){
+            sum += it;
+            int f = sum - k;
+            if(mp.find(f) != mp.end()){
+                ans += mp[f];
+            }
+            mp[sum]++;
+        }
+        return ans;
+	}
+};
