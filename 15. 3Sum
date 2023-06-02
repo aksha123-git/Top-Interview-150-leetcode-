@@ -1,0 +1,124 @@
+/*class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        
+        vector<vector<int>> ans;
+        int n = nums.size();
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < n; i++)
+        {
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            int low  = i + 1, high = n -1;
+            while(low < high)
+            {
+                int current  = nums[i] + nums[low] + nums[high];
+                if(current == 0)
+                {
+                    ans.push_back({nums[i], nums[low], nums[high]});
+                    while(low < high && nums[low] == nums[i+1]) low++;
+                    while(high > low && nums[high] == nums[high - 1]) high--;
+                   
+                }
+                if(current < 0)
+                {
+                    low++;
+                }
+                else{
+                    high--;
+                }
+            }
+        }
+
+        return ans;
+        
+    }
+};*/
+
+
+
+//binary search
+/*class Solution{
+public:
+vector<vector<int>> threeSum(vector<int>& nums) {
+   vector<vector<int>> ans ;
+   sort(nums.begin(), nums.end() );
+   int n = nums.size();
+   for(int i = 0 ; i < n ; i++)
+   {
+       int a = nums[i];
+       int t = -a;
+       int s = i+1 , e = n-1; // a+b+c=0     b+c = -a
+       while(s < e){
+           if(nums[s] + nums[e] == t){
+               ans.push_back({nums[i] , nums[s ], nums[e]});
+               while( s < e && nums[s] == nums[s+1])s++;
+               while( s < e && nums[e]== nums[e-1])e--;
+               s++;
+               e--;
+           }
+           else if(nums[s] + nums[e] > t){
+               e--;
+           }
+           else{
+               s++;
+           }
+       }
+       while(i+1 < n && nums[i+1] == nums[i]) i++;//dupilcate
+   }
+       return ans;
+   }   
+};*/
+
+
+//set
+#define ll long long int
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        set<vector<int>>m;
+        vector<vector<int>>ans;
+        for(ll i = 0 ; i < nums.size(); i++){
+            ll j = i+1;
+            ll k = nums.size()-1;
+
+            while(j < k){
+                ll sum = (ll)nums[i] + (ll)nums[j] + (ll)nums[k];
+                if(sum < 0) j++;
+                else if(sum == 0){
+                    vector<int> v={nums[i],nums[j],nums[k]};
+                   if(!m.count(v))ans.push_back(v);
+                   m.insert(v);
+                   j++;
+               k--;
+              }
+              else k--; 
+               }
+      }
+
+      
+      return ans;
+        }
+};
+/*A set named mp is declared to store the unique triplets encountered during the process. The use of a set ensures that only unique triplets are stored.
+
+The res vector is initialized to store the resulting triplets.
+
+The code uses a loop to iterate over each element in the array nums. The loop variable i represents the first element of the potential triplet.
+
+Inside the loop, two pointers j and k are initialized. j points to the next element after i, and k points to the last element of the array.
+
+The code enters a while loop, which continues until j is less than k.
+
+Inside the while loop, the sum of the current triplet is calculated as nums[i] + nums[j] + nums[k] and stored in the variable sum.
+
+If the sum is less than zero, it means the current triplet's sum is too small. In this case, j is incremented to move to the next element in the sorted array.
+
+If the sum is equal to zero, it means a valid triplet is found. A vector v is created to store the triplet nums[i], nums[j], nums[k].
+
+Before adding the triplet to the result vector res, it is checked if the same triplet already exists in the mp set. If not, the triplet is added to res and inserted into the mp set to mark its presence.
+
+Finally, if the sum is greater than zero, it means the current triplet's sum is too large. In this case, k is decremented to move to the previous element in the sorted array.
+After the while loop ends, the outer loop moves to the next element by incrementing i.
+
+Once all elements are processed, the function returns the result vector res containing the unique triplets whose sum is zero.*/
